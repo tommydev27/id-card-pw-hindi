@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ID Card Editor</title>
+
+    <!-- TAMBAHAN: html2canvas -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+    <style>
+        :root {
+            --card-bg: #e8f5e9;
+            --green-dark: #1b5e20;
+            padding: 1vw;
+            margin: 1vw;
+          font-family: Sans-Serif;
+        }
+
+        body {
+          font-family: Sans-Serif;
+            align-items: center;
+            background-color: #f0f0f0;
+            padding: 1vw;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        #id-card {
+            width: 100%;
+            max-width: 200vw;
+            aspect-ratio: 500 / 340;
+            background-color: var(--card-bg);
+            border-radius: 4vw;
+            position: relative;
+            padding: 3vw 3vw;
+            box-sizing: border-box;
+            box-shadow: 0 2vw 7vw rgba(0,0,0,0.2);
+            overflow: hidden;
+            border: 0.5vw solid #ccc;
+            background-image: linear-gradient(45deg, #ffffff 25%, transparent 25%), 
+                              linear-gradient(-45deg, #ffffff 25%, transparent 25%);
+            background-size: 5vw 5vw;
+            background-color: #f1f8e9;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .logo-pakistan { width: 10vw; height: 10vw; }
+        .flag { width: 10vw; }
+
+        .title-area {
+            text-align: center;
+            font-family: Sans-Serif;
+            flex-grow: 1;
+        }
+
+        .title-area h2 {
+            margin: 0;
+            font-size: 4vw;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 15vw 1fr 30vw;
+            gap: 0.5vw;
+            margin-top: 0;
+        }
+
+        .chip {
+            width: 12vw;
+            height: 9vw;
+            background: linear-gradient(135deg, #d4af37, #f9d71c);
+            border-radius: 2vw;
+            border: 0.5vw solid #999;
+        }
+
+        .details {
+            font-size: 1.8vw;
+            line-height: 1.3;
+        }
+
+        .editable-field {
+            border: 0.5vw dashed transparent;
+            padding: 0.5vw;
+            display: block;
+        }
+
+        .editable-field:hover {
+            border-color: #999;
+            background: rgba(255,255,255,0.5);
+        }
+
+        .label { color: var(--green-dark); font-weight: bold; font-size: 2vw; }
+        .val-en { font-weight: bold; font-size: 3vw; text-transform: uppercase; }
+        .val-ur { float: right; font-size: 3vw; font-family: 'normal'; }
+
+        .photo-area {
+            text-align: center;
+            position: relative;
+        }
+
+        #main-photo {
+            width: 25vw;
+            height: 33vw;
+            border: 0.5vw solid #999;
+            object-fit: cover;
+            background: #eee;
+        }
+
+        .ghost-photo {
+            position: absolute;
+            bottom: 8vw;
+            left: 3vw;
+            width: 10vw;
+            height: 13vw;
+            opacity: 0.3;
+            filter: grayscale(100%);
+        }
+
+        .signature {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 4vw;
+            margin-top: 2vw;
+        }
+
+        .controls {
+            margin-top: 2vw;
+            background: white;
+            padding: 5vw 3vw;
+            border-radius: 3vw;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        button {
+            padding: 2vw 4vw;
+            background: var(--green-dark);
+            color: white;
+            border: none;
+            border-radius: 2vw;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="id-card">
+        <div class="header">
+            <div class="logo-pakistan">🟢</div>
+            <div class="title-area">
+                <h2>PAKISTAN <span style="font-size: 2.2vw;">National Identity Card</span></h2>
+                <div style="font-size: 2vw;">ISLAMIC REPUBLIC OF PAKISTAN</div>
+            </div>
+            <div class="flag" style="font-size: 5vw;">🇵🇰</div>
+        </div>
+
+        <div class="content">
+            <div class="left-col">
+                <div class="chip"></div>
+                <img src="https://via.placeholder.com/40x50" class="ghost-photo" id="ghost-img">
+            </div>
+
+            <div class="details">
+                <div>
+                    <span class="label">Name</span><br>
+                    <span class="val-en editable-field" contenteditable="true">Ayesha khan</span>
+                    <span class="val-ur editable-field" contenteditable="true">سیف اللہ</span>
+                </div>
+                <hr>
+                <div>
+                    <span class="label">Father Name</span><br>
+                    <span class="val-en editable-field" contenteditable="true">Ghulli Hussain</span>
+                    <span class="val-ur editable-field" contenteditable="true">غلام حسین</span>
+                </div>
+
+                <div style="display: flex; gap: 2vw; margin-top: 1vw; font-size:2.5vw;">
+                    <div><span class="label">Gender</span><br><span class="editable-field" contenteditable="true">M</span></div>
+                    <div><span class="label">Country of Stay</span><br><span class="editable-field" contenteditable="true">Pakistan</span></div>
+                </div>
+
+                <div style="display: flex; gap: 2vw; margin-top: 1vw; font-size:2.5vw;">
+                    <div><span class="label">Identity Number</span><br><span class="editable-field" contenteditable="true">38403-9346396-1</span></div>
+                    <div><span class="label">Date of Birth</span><br><span class="editable-field" contenteditable="true">10.11.1999</span></div>
+                </div>
+
+                <div style="display: flex; gap: 2vw; margin-top: 1vw; font-size:2.5vw;">
+                    <div><span class="label">Date of Issue</span><br><span class="editable-field" contenteditable="true">12.06.2023</span></div>
+                    <div><span class="label">Date of Expiry</span><br><span class="editable-field" contenteditable="true">12.06.2028</span></div>
+                </div>
+            </div>
+
+            <div class="photo-area">
+          <img src="https://via.placeholder.com/120x150" id="main-photo" style="cursor:pointer;">
+                <div class="signature editable-field" contenteditable="true">Ayesha</div>
+                <div style="font-size: 2.5vw;">Holder's Signature</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <h3>Pengaturan Konten</h3>
+        <label>Ganti Foto:</label>
+        <input type="file" id="upload-photo" accept="image/*"><br><br>
+
+        <!-- TOMBOL BARU -->
+        <button onclick="downloadCard()">Download KTP</button>
+    </div>
+
+    <script>
+        const uploadPhoto = document.getElementById('upload-photo');
+        const mainPhoto = document.getElementById('main-photo');
+        const ghostPhoto = document.getElementById('ghost-img');
+
+        uploadPhoto.addEventListener('change', function(e) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                mainPhoto.src = event.target.result;
+                ghostPhoto.src = event.target.result;
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        });
+
+function downloadCard() {
+    const card = document.getElementById("id-card");
+
+
+    html2canvas(card, {
+        scale: 2, 
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: null, 
+        width: card.offsetWidth,
+        height: card.offsetHeight,
+        windowWidth: card.ownerDocument.documentElement.clientWidth,
+        windowHeight: card.ownerDocument.documentElement.clientHeight
+    }).then(canvas => {
+        const link = document.createElement("a");
+        const date = new Date().getTime();
+        link.download = `ktp_${date}.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+    }).catch(err => {
+        console.error("Gagal mendownload:", err);
+    });
+}
+          const photoInput = document.getElementById('upload-photo');
+          const mainPhotoEl = document.getElementById('main-photo');
+          
+          mainPhotoEl.addEventListener('click', function() {
+              photoInput.click();
+          });
+    </script>
+
+</body>
+</html>
