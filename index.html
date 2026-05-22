@@ -10,17 +10,15 @@
 
     <style>
         :root {
-            --card-bg: #e8f5e9;
-            --green-dark: #1b5e20;
             padding: 1vw;
             margin: 1vw;
-          font-family: Sans-Serif;
+          font-family: normal;
         }
 
         body {
-          font-family: Sans-Serif;
+          font-family: normal;
             align-items: center;
-            background-color: #f0f0f0;
+            background-color:#000000;
             padding: 1vw;
             margin: 0;
             overflow-x: hidden;
@@ -55,7 +53,7 @@
 
         .title-area {
             text-align: center;
-            font-family: Sans-Serif;
+            font-family: normal;
             flex-grow: 1;
         }
 
@@ -129,26 +127,36 @@
         }
 
         .controls {
-            margin-top: 2vw;
+            margin: 2vw 0;
             background: white;
-            padding: 5vw 3vw;
-            border-radius: 3vw;
-            width: 100%;
+            padding: 3vw 3vw;
+            border-radius: 2vw;
             max-width: 100%;
+            
         }
 
         button {
-            padding: 2vw 4vw;
-            background: var(--green-dark);
+            padding:3.3vw;
+            background: #1b5e20;
+            width: 100%;
             color: white;
             border: none;
             border-radius: 2vw;
             cursor: pointer;
         }
+        
+          .app-title {
+              font-weight: 900;
+              font-size: 12px;
+              padding-bottom: 5px;
+              color: #bbb;
+          }
     </style>
 </head>
 <body>
-
+   <header>
+        <div class="app-title">edit id</div>
+    </header>
     <div id="id-card">
         <div class="header">
             <div class="logo-pakistan">🟢</div>
@@ -203,12 +211,10 @@
     </div>
 
     <div class="controls">
-        <h3>Pengaturan Konten</h3>
-        <label>Ganti Foto:</label>
-        <input type="file" id="upload-photo" accept="image/*"><br><br>
+        <input type="file" id="upload-photo" accept="image/*">
+    </div>
 
-        <!-- TOMBOL BARU -->
-        <button onclick="downloadCard()">Download KTP</button>
+        <button onclick="downloadCard()">Download ID</button>
     </div>
 
     <script>
